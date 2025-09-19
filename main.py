@@ -1,14 +1,18 @@
 from pb.mindlet.pcbook import Cpu
+import grpc
+from concurrent import futures
 
-cpu = Cpu(
-    brand="Intel",
-    name="Core i7-10750H",
-    number_cores=6,
-    number_threads=12,
-    min_ghz=2.6,
-    max_ghz=5.0,
-)
+import pb.mindlet.pcbook as CreateLaptop
+
+
+def serve():
+    server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
+    CreateLaptop.add_LaptopService_to_server([ICI], server)
+    server.add_insecure_port("[::]:50051")  
+    server.start()
+    print("🚀 Serveur gRPC lancé sur le port 50051")
+    server.wait_for_termination()
 
 
 if __name__ == "__main__":
-    print(cpu)
+    serve()
