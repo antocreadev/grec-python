@@ -1,10 +1,13 @@
 .PHONY : gen-original gen clean run
 
 gen:
-	source .venv/bin/activate && python -m grpc.tools.protoc \
+	source .venv/bin/activate && \
+	python -m grpc.tools.protoc \
 		--proto_path=proto \
 		--python_betterproto2_out=pb \
-		proto/*.proto
+		proto/*.proto \
+		--python_betterproto2_opt=client_generation=sync_async \
+		--python_betterproto2_opt=server_generation=async 
 
 gen-original : 
 	source .venv/bin/activate &&  python -m grpc_tools.protoc \

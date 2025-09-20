@@ -1,18 +1,19 @@
-from pb.mindlet.pcbook import Cpu
-import grpc
-from concurrent import futures
+import asyncio
 
-import pb.mindlet.pcbook as CreateLaptop
+from grpclib.utils import graceful_exit
+from grpclib.server import Server
+
+from services.laptop import LaptopService
 
 
-def serve():
-    server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
-    CreateLaptop.add_LaptopService_to_server([ICI], server)
-    server.add_insecure_port("[::]:50051")  
-    server.start()
-    print("🚀 Serveur gRPC lancé sur le port 50051")
-    server.wait_for_termination()
+async def main(*, host="127.0.0.1", port=50051):
+    server = Server([LaptopService()])
+    # Note: graceful_exit isn't supported in Windows
+    with graceful_exit([server]):
+        await server.start(host, port)
+        print(f"Serving on {host}:{port}")
+        await server.wait_closed()
 
 
 if __name__ == "__main__":
-    serve()
+    asyncio.run(main())
