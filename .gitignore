@@ -3,3 +3,8 @@ pb/*
 **/__pycache__/
 **/*.pyc
 **/.DS_Store
+php_out
+vendor/
+composer.json
+composer.lock
+

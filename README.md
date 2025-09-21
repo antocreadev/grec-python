@@ -23,3 +23,9 @@
 - `oneof` : Permet de définir un champ qui peut contenir une valeur parmi plusieurs types possibles. Utile pour les messages polymorphes. Un `oneof` ne peut jamais contenir plus d'un champ actif. Il sert à gérer des données alternatives (soit l’une, soit l’autre, jamais les deux).
 
 - `google.protobuf.Timestamp` : Représente un instant précis dans le temps, avec une précision allant jusqu'à la nanoseconde. Utile pour les horodatages.
+
+
+## Pour php 
+
+composer require grpc/grpc
+composer require google/protobuf
